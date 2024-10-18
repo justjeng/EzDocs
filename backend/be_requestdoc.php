@@ -12,7 +12,6 @@ try {
         $docreq = $_POST['reqDoc'];
         $datereq = $_POST['reqDate'];
 
-<<<<<<< HEAD
         $coecount = 0;
         $diplocount = 0;
         $form137count = 0;
@@ -30,25 +29,6 @@ try {
                 $form138count = $rowrequest['count_form_138'];
                 $goodmoralcount = $rowrequest['count_good_moral'];
             }
-=======
-        mysqli_autocommit($conn,FALSE);
-
-        $addRequestSql = "INSERT INTO ezdrequesttbl(studentID, fullName, gradelvl, reqDoc, reqDate) VALUES('$studentid', '$studentname', '$gradelev', '$docreq', '$datereq')";
-
-        mysqli_query($conn, $addRequestSql);
-
-        $lastID = mysqli_insert_id($conn);
-
-        $requestHistorySql = "INSERT INTO requestHistory(reqID, reqHistoryDesc, dateCreated) VALUES('".$lastID."', 'Document request for ".$docreq." is submitted.', '".date("Y-m-d H:i:s")."')";
-        $errorMessage = $requestHistorySql;
-
-        mysqli_query($conn, $requestHistorySql);
-
-        if (!mysqli_commit($conn)) {
-            header('Location: ../reqdocument.php?errorMsg=Something went wrong');
-        } else {
-            header('Location: ../index.php');
->>>>>>> d020ad5d5ddb59840dfbbf28f9cbc5be19712e84
         }
 
         if (
@@ -87,11 +67,3 @@ try {
     //header("Location: ../reqdocument.php?errorMsg=" . $e->getMessage());
     header("Location: ../reqdocument.php?errorMsg=" . $errorMessage);
 }
-<<<<<<< HEAD
-=======
- catch (Exception $e) {
-    //header("Location: ../reqdocument.php?errorMsg=" . $e->getMessage());
-    header("Location: ../reqdocument.php?errorMsg=" . $errorMessage);
-}
-?>
->>>>>>> d020ad5d5ddb59840dfbbf28f9cbc5be19712e84
