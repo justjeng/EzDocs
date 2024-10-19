@@ -4,7 +4,7 @@ try {
     include("_conn/connection.php");
 
     // Query to get total document requests
-    $totalQuery = "SELECT COUNT(*) AS total_requests FROM ezdrequesttbl WHERE studentID = 1;";
+    $totalQuery = "SELECT COUNT(*) AS total_requests FROM ezdrequesttbl WHERE studentLRN = 1;";
     $totalResult = mysqli_query($conn, $totalQuery);
     $totalRow = mysqli_fetch_assoc($totalResult);
     $totalRequests = $totalRow['total_requests'];

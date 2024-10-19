@@ -5,13 +5,14 @@ include_once("../_includes/scripts.php");
 try {
     include("../_conn/connection.php");
 
-    $sql = "SELECT E.id, E.fullName, E.gradelvl, E.reqDoc, E.reqDate, E.status, S.phoneNumber FROM `ezdrequesttbl` E JOIN student_tbl S ON E.studentID = S.studentId WHERE E.status != 'claimed'";
+    $sql = "SELECT E.id, E.studentLRN, E.fullName, E.gradelvl, E.reqDoc, E.reqDate, E.status, S.phoneNumber FROM `ezdrequesttbl` E JOIN student_tbl S ON E.studentLRN = S.studentId WHERE E.status != 'claimed'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
         echo '<table class="table" id="documentTableStudent">
                 <thead>
                     <tr>
+                        <th scope="col">LRN</th>
                         <th scope="col">Student Name</th>
                         <th scope="col">Grade Level</th>
                         <th scope="col">Document Name</th>
@@ -29,6 +30,7 @@ try {
             $id = $row['id'];
 
             echo '<tr>
+                    <td class="align-middle">' . htmlspecialchars($row['studentLRN']) . '</td>
                     <td class="align-middle">' . htmlspecialchars($row['fullName']) . '</td>
                     <td class="align-middle">' . htmlspecialchars($row['gradelvl']) . '</td>
                     <td class="align-middle">' . htmlspecialchars($row['reqDoc']) . '</td>
@@ -43,7 +45,8 @@ try {
                         </select>
                     </td>
                     <td>
-                        <a class="btn" href="admin_msgreq.php?phoneNumber='.$row['phoneNumber'].'">Message</a>
+                        <a class="" href="admin_msgreq.php?phoneNumber=' . $row['phoneNumber'] . '">Message</a>
+                        <a class="" href="admineditreq.php">Edit</a>
                     </td>
                  </tr>';
         }
@@ -58,4 +61,3 @@ try {
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
 }
-?>

@@ -19,7 +19,7 @@ try {
     }
 
     // SQL query to fetch data
-    $sql = "SELECT * FROM ezdrequesttbl WHERE studentID = " . intval($_SESSION['studentId']);
+    $sql = "SELECT * FROM ezdrequesttbl WHERE studentLRN = " . intval($_SESSION['studentId']);
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {

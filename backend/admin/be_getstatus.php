@@ -4,8 +4,8 @@ include_once("../../_conn/connection.php");
 // Log incoming GET data for debugging
 file_put_contents('getstatus.log', json_encode($_GET) . PHP_EOL, FILE_APPEND);
 
-if (isset($_GET['studentID'])) {
-    $id = intval($_GET['studentID']);
+if (isset($_GET['studentLRN'])) {
+    $id = intval($_GET['studentLRN']);
     
     $query = "SELECT status FROM ezdrequesttbl WHERE studentID = ?";
     if ($stmt = $conn->prepare($query)) {

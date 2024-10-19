@@ -2,13 +2,13 @@
 include("../../_conn/connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['studentID']) && isset($_POST['status'])) {
+    if (isset($_POST['studentLRN']) && isset($_POST['status'])) {
         $studentid = mysqli_real_escape_string($conn, $_POST['studentID']);
         $status = mysqli_real_escape_string($conn, $_POST['status']);
         
         $validStatuses = ['pending', 'processing', 'ready', 'claimed'];
         if (in_array($status, $validStatuses)) {
-            $updateQuery = "UPDATE ezdrequesttbl SET status='$status' WHERE studentID='$studentid'";
+            $updateQuery = "UPDATE ezdrequesttbl SET status='$status' WHERE studentLRN='$studentid'";
             if (mysqli_query($conn, $updateQuery)) {
                 echo "Success";
             } else {

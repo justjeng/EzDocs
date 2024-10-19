@@ -58,7 +58,7 @@ include_once("../_conn/session.php");
             <div class="grid grid-cols-2 gap-x-2">
                 <div class="col-span-2 mb-2">
                     <label>Student ID No.</label>
-                    <input class="form-control" type="text" name="studentID">
+                    <input class="form-control" type="text" name="studentLRN">
                 </div>
                 <div class="col-span-2 mb-2">
                     <label>Student Name</label>

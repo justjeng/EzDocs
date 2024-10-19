@@ -41,7 +41,7 @@ try {
         ) {
             mysqli_autocommit($conn, FALSE);
 
-            $addRequestSql = "INSERT INTO ezdrequesttbl(studentID, fullName, gradelvl, reqDoc, reqDate) VALUES('$studentid', '$studentname', '$gradelev', '$docreq', '$datereq')";
+            $addRequestSql = "INSERT INTO ezdrequesttbl(studentLRN, fullName, gradelvl, reqDoc, reqDate) VALUES('$studentid', '$studentname', '$gradelev', '$docreq', '$datereq')";
 
             mysqli_query($conn, $addRequestSql);
 

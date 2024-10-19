@@ -5,7 +5,7 @@ try {
     include("../../_conn/connection.php");
 
     if (isset($_POST['btneditdoc'])) {
-        $studentid = $_POST['studentID'];
+        $studentid = $_POST['studentLRN'];
         $studentname = $_POST['fullName'];
         $gradelev = $_POST['gradelv'];
         $docreq = $_POST['reqDoc'];
