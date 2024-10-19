@@ -12,7 +12,6 @@
     include("../_includes/scripts.php");
     ?>
 
-<<<<<<< HEAD
     <style>
         body {
             margin: 0;
@@ -58,13 +57,10 @@
         }
     </style>
 
-=======
->>>>>>> d020ad5d5ddb59840dfbbf28f9cbc5be19712e84
 </head>
 
 <body>
 
-<<<<<<< HEAD
     <div class="overlay"></div>
     
     <div class="container flex flex-col items-center justify-center w-full">
@@ -74,16 +70,6 @@
                 <h1 class="text-[32px] !text-left text-black">Welcome</h1>
                 <p class="text-[14px] text-black-300">
                     Please enter your credentials. We'll make sure your data is safe with us.
-=======
-    <div class="flex flex-col items-center justify-center h-screen w-full">
-
-        <div class="shadow-lg p-5 rounded min-w-[500px]">
-
-            <div class="mb-4">
-                <h1 class="text-[32px] !text-left">ADMIN</h1>
-                <p class="text-[14px] text-gray-600">
-                    Please enter your credentials.
->>>>>>> d020ad5d5ddb59840dfbbf28f9cbc5be19712e84
                 </p>
             </div>
 
@@ -104,7 +90,6 @@
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" name="inputPassword">
-<<<<<<< HEAD
                     <div class="w-full text-right">
                         <a href="forgot_password.php" class="text-black-300 text-[14px] hover:text-blue-500 hover:underline">Forgot
                             password?</a>
@@ -118,11 +103,6 @@
                 <a href="adminregistration.php" class="font-medium text-blue-500 hover:underline">Create an account here.</a>
             </p>
 
-=======
-                </div>
-                <button type="submit" class="btn btn-primary w-full py-2" name="btnLogin">Login</button>
-            </form>
->>>>>>> d020ad5d5ddb59840dfbbf28f9cbc5be19712e84
         </div>
 
     </div>
