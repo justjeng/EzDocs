@@ -64,8 +64,8 @@ include_once("_conn/session.php");
                         <option disabled selected value="">-- Select option --</option>
                         <option value="Certificate of Enrollment">Certificate of Enrollment</option>
                         <option value="Certificate of Good Moral">Good Moral</option>
-                        <option value="Form 137 (SF10)">Form 137 (SF10)</option>
-                        <option value="Form 138 (SF9)">Form 138 (SF9)</option>
+                        <option value="Form 137">Form 137 (SF10)</option>
+                        <option value="Form 138">Form 138 (SF9)</option>
                         <option value="Diploma">Diploma</option>
                     </select>
                 </div>

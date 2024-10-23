@@ -18,7 +18,12 @@ try {
         $form138count = 0;
         $goodmoralcount = 0;
 
-        $getuserRequests = "SELECT COUNT(CASE WHEN reqDoc = 'Certificate of Enrollment' THEN 1 END) AS count_certificate_of_enrollment, COUNT(CASE WHEN reqDoc = 'Certificate of Good Moral' THEN 1 END) AS count_good_moral, COUNT(CASE WHEN reqDoc = 'Form 137' THEN 1 END) AS count_form_137, COUNT(CASE WHEN reqDoc = 'Form 138' THEN 1 END) AS count_form_138, COUNT(CASE WHEN reqDoc = 'Diploma' THEN 1 END) AS count_diploma FROM ezdrequesttbl WHERE studentID = " . $_SESSION['studentId'];
+        $getuserRequests = "SELECT 
+                            COUNT(CASE WHEN reqDoc = 'Certificate of Enrollment' THEN 1 END) AS count_certificate_of_enrollment, 
+                            COUNT(CASE WHEN reqDoc = 'Certificate of Good Moral' THEN 1 END) AS count_good_moral, 
+                            COUNT(CASE WHEN reqDoc = 'Form 137' THEN 1 END) AS count_form_137, 
+                            COUNT(CASE WHEN reqDoc = 'Form 138' THEN 1 END) AS count_form_138, 
+                            COUNT(CASE WHEN reqDoc = 'Diploma' THEN 1 END) AS count_diploma FROM ezdrequesttbl WHERE studentLRN = " . $_SESSION['studentId'];
 
         $requestres = mysqli_query($conn, $getuserRequests);
         if ($requestres) {
@@ -57,13 +62,12 @@ try {
             } else {
                 header('Location: ../index.php');
             }
-        }
-        else {
-            header('Location: ../reqdocument.php?errorMsg=You cannot request more than 2 '.$docreq.'.');
+        } else {
+            header('Location: ../reqdocument.php?errorMsg=You cannot request more than 2 ' . $docreq . '.');
         }
         mysqli_close($conn);
     }
 } catch (Exception $e) {
-    //header("Location: ../reqdocument.php?errorMsg=" . $e->getMessage());
-    header("Location: ../reqdocument.php?errorMsg=" . $errorMessage);
+    //check for errors
+    header("Location: ../reqdocument.php?errorMsg=" . $e->getMessage());
 }
