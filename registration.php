@@ -115,7 +115,7 @@
     <div class="mb-3 col-span-2">
         <label for="inputMiddlename" class="form-label">Middle Name</label>
         <input type="text" class="form-control" id="inputMiddlename" aria-describedby="middleName"
-            name="inputMiddlename"  required value="<?php if (isset($_GET['middlename'])) { echo $_GET['middlename']; } ?>">
+            name="inputMiddlename"  value="<?php if (isset($_GET['middlename'])) { echo $_GET['middlename']; } ?>">
     </div>
 
     <div class="mb-3 col-span-3">
