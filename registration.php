@@ -101,7 +101,7 @@
 
 <div class="grid grid-cols-4 gap-x-3">
     <div class="mb-3 col-span-4">
-        <label for="inputStudentId" class="form-label">Student ID</label>
+        <label for="inputStudentId" class="form-label">LRN</label>
         <input type="text" class="form-control" id="inputStudentId" aria-describedby="studentId"
             name="inputStudentId" required value="<?php if (isset($_GET['studentId'])) { echo $_GET['studentId']; } ?>">
     </div>

@@ -11,7 +11,7 @@ if (!$conn) {
 $idsession = $_SESSION['studentId'];
 
 // Fetch student data
-$sql = "SELECT s.* FROM student_tbl s JOIN ezdrequesttbl r ON s.studentId = r.studentId WHERE r.status = 'ready' AND s.studentId =  $idsession";
+$sql = "SELECT s.* FROM student_tbl s JOIN ezdrequesttbl r ON s.studentID = r.studentLRN WHERE r.status = 'ready' AND s.studentId =  $idsession";
 $result = mysqli_query($conn, $sql);
 if (!$result || mysqli_num_rows($result) == 0) {
     die("No results found or query failed: " . mysqli_error($conn));
@@ -19,7 +19,7 @@ if (!$result || mysqli_num_rows($result) == 0) {
 $row = mysqli_fetch_assoc($result);
 
 // Fetch request history
-$requestHistorySql = "SELECT * FROM ezdrequesttbl WHERE status = 'ready' AND studentId = ?";
+$requestHistorySql = "SELECT * FROM ezdrequesttbl WHERE status = 'ready' AND studentLRN = ?";
 $stmt = mysqli_prepare($conn, $requestHistorySql);
 mysqli_stmt_bind_param($stmt, "s", $idsession);
 mysqli_stmt_execute($stmt);
