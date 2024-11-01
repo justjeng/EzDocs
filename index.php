@@ -10,160 +10,206 @@ include_once("_conn/session.php");
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
 
-    <!-- Includes -->
-    <?php
-    include("_includes/styles.php");
-    include("_includes/scripts.php");
-    ?>
+  <!-- Includes -->
+  <?php
+  include("_includes/styles.php");
+  include("_includes/scripts.php");
+  ?>
 
-    <style>
-      /* Global Styles */
-      body {
-        font-family: 'Open Sans', sans-serif;
-        font-size: 16px;
-        line-height: 1.5;
-        background-color: #F7F7F7; /* Light gray */
-        color: #333333; /* Dark gray */
-      }
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background-color: #F7F7F7;
+      /* Light gray */
+      color: #333333;
+      /* Dark gray */
+    }
 
-      /* Header Styles */
-      nav {
-        background-color: #8BC34A; /* Mint green */
-        padding: 20px;
-        text-align: center;
-      }
+    /* Header Styles */
+    nav {
+      background-color: #8BC34A;
+      /* Mint green */
+      padding: 20px;
+      text-align: center;
+    }
 
-      nav h1 {
-        color: #FFFFFF;
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
+    nav h1 {
+      color: #FFFFFF;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
 
-      
-      nav ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: space-between;
-      }
 
-      nav li {
-        margin-right: 20px;
-      }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+    }
 
-      nav a {
-        color: #FFFFFF;
-        text-decoration: none;
-      }
+    nav li {
+      margin-right: 20px;
+    }
 
-      
-      .container {
-        max-width: 1200px;
-        margin: 40px auto;
-        padding: 20px;
-      }
+    nav a {
+      color: #FFFFFF;
+      text-decoration: none;
+    }
 
-      .rounded {
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
 
-      .shadow-lg {
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-      }
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
 
-      .mt-2 {
-        margin-top: 20px;
-      }
+    .rounded {
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-      .px-3 {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
+    .shadow-lg {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
 
-      .py-5 {
-        padding-top: 40px;
-        padding-bottom: 40px;
-      }
+    .mt-2 {
+      margin-top: 20px;
+    }
 
-      .bg-white {
-        background-color: #FFFFFF;
-      }
+    .px-3 {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
 
-      
-      .table {
-        width: 100%;
-        border-collapse: collapse;
-      }
+    .py-5 {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
 
-      .table th, .table td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: left;
-      }
+    .bg-white {
+      background-color: #FFFFFF;
+    }
 
-      .table th {
-        background-color: #8BC34A;
-        color: #FFFFFF;
-      }
 
-      .btn {
-        background-color: #FFC107;
-        color: #FFFFFF;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-      }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-      .btn:hover {
-        background-color: #FFA07A;
-      }
-    </style>
+    .table th,
+    .table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .table th {
+      background-color: #8BC34A;
+      color: #FFFFFF;
+    }
+
+    .btn {
+      background-color: #FFC107;
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #FFA07A;
+    }
+  </style>
 
 </head>
 
 <body>
-    <nav class="flex flex-row items-center justify-between px-10 py-4 bg-emerald-900">
-        <h1 class="font-bold text-[26px] text-white">EZDocs</h1>
-        <ul class="flex flex-row gap-x-4 !p-0 !m-0 list-none">
-            <li>
-                <a class="block text-white text-sm md:text-base font-regular hover:no-underline px-3" href="profile.php">
-                    Profile
-                </a>
-            </li>
-            <li>
-                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="claim/claim_history.php">
-                    Claimed History
-                </a>
-            </li>
-            <li>
-                <button class="block text-white text-[17px] font-regular hover:no-underline px-3" id="btnLogout">
-                    Logout
-                </button>
-            </li>
-        </ul>
-    </nav>
+  <?php if (isset($_SESSION['success'])) { ?>
 
-    <div class="container pt-5">
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: '<?= $_SESSION['success'] ?>',
+        confirmButtonText: 'OK'
+      });
+    </script>
+
+
+    <?php
+    unset($_SESSION['success']); ?>
+
+  <?php } else if (isset($_SESSION['error'])) { ?>
+
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: '<?= $_SESSION['error'] ?>',
+        confirmButtonText: 'OK'
+      });
+    </script>
+
+    <?php
+    unset($_SESSION['error']); ?>
+
+  <?php } else if (isset($_SESSION['info'])) { ?>
+    <script>
+      Swal.fire({
+        icon: 'info',
+        title: 'Notice!',
+        text: '<?= $_SESSION['info'] ?>',
+        confirmButtonText: 'OK'
+      });
+    </script>
+
+    <?php
+    unset($_SESSION['info']); ?>
+  <?php } ?>
+  <nav class="flex flex-row items-center justify-between px-10 py-4 bg-emerald-900">
+    <h1 class="font-bold text-[26px] text-white">EZDocs</h1>
+    <ul class="flex flex-row gap-x-4 !p-0 !m-0 list-none">
+      <li>
+        <a class="block text-white text-sm md:text-base font-regular hover:no-underline px-3" href="profile.php">
+          Profile
+        </a>
+      </li>
+      <li>
+        <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="claim/claim_history.php">
+          Claimed History
+        </a>
+      </li>
+      <li>
+        <button class="block text-white text-[17px] font-regular hover:no-underline px-3" id="btnLogout">
+          Logout
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container pt-5">
     <div class="flex flex-row items-center justify-between padding-20px">
-    <h1 class="text-[clamp(1rem,5vw,2rem)] font-bold">Hi there, <br><?php echo $_SESSION['fullName']; ?></h1>
+      <h1 class="text-[clamp(1rem,5vw,2rem)] font-bold">Hi there, <br><?php echo $_SESSION['fullName']; ?></h1>
 
-    <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-5">
         <a class="btn btn-primary px-6 py-2" href="reqdocument.php">Request Document</a>
+      </div>
     </div>
-</div>
 
-        <div class="table-responsive rounded shadow-lg mt-2 px-3 py-5 bg-white">
-            <?php
-            include_once('backend/be_showdashtable.php');
-            ?>
-            <!-- <table class="table" id="documentTableStudent">
+    <div class="table-responsive rounded shadow-lg mt-2 px-3 py-5 bg-white">
+      <?php
+      include_once('backend/be_showdashtable.php');
+      ?>
+      <!-- <table class="table" id="documentTableStudent">
                 <thead>
                     <tr>
                         <th scope="col">Document Name</th>
@@ -184,79 +230,79 @@ include_once("_conn/session.php");
                     </tr>
                 </tbody>
             </table> -->
-        </div>
-       <div class="d-flex justify-content-end mt-4"> 
-            <a class="btn btn-success position-relative px-6 py-2" href="digitalslip.php">Request Slip</a>
-        </div>
-
+    </div>
+    <div class="d-flex justify-content-end mt-4">
+      <a class="btn btn-success position-relative px-6 py-2" href="digitalslip.php">Request Slip</a>
     </div>
 
-    <script>
+  </div>
+
+  <script>
     $(document).ready(function() {
-        function fetchStatuses() {
-            $.ajax({
-                url: 'backend/be_getstatus.php',
-                type: 'GET',
-                success: function(response) {
-                    const statuses = JSON.parse(response);
-                    statuses.forEach(function(status) {
-                        $(`#status-${status.id}`).text(status.status);
-                    });
-                }
+      function fetchStatuses() {
+        $.ajax({
+          url: 'backend/be_getstatus.php',
+          type: 'GET',
+          success: function(response) {
+            const statuses = JSON.parse(response);
+            statuses.forEach(function(status) {
+              $(`#status-${status.id}`).text(status.status);
             });
-        }
+          }
+        });
+      }
 
-        
-        setInterval(fetchStatuses, 30000);
+
+      setInterval(fetchStatuses, 30000);
     });
-    </script>
+  </script>
 
-    <script>
+  <script>
     function pollStatus() {
-        const studentId = <?php echo json_encode($student_id); ?>; 
+      const studentId = <?php echo json_encode($student_id); ?>;
 
-        fetch('path/to/be_getstatus.php?student_id=' + studentId)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    updateDashboard(data.updates);
-                } else {
-                    console.error(data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
+      fetch('path/to/be_getstatus.php?student_id=' + studentId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            updateDashboard(data.updates);
+          } else {
+            console.error(data.message);
+          }
+        })
+        .catch(error => console.error('Error:', error));
     }
 
     function updateDashboard(updates) {
-        
-        console.log(updates);
+
+      console.log(updates);
     }
 
     setInterval(pollStatus, 10000);
-    </script>
+  </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#documentTableStudent').DataTable();
-        });
+  <script>
+    $(document).ready(function() {
+      $('#documentTableStudent').DataTable();
+    });
 
-        $('#btnLogout').click(function(e) {
+    $('#btnLogout').click(function(e) {
 
-            Swal.fire({
-                title: "SIGN OUT",
-                text: "Are you sure you want to logout?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Logout"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = "backend/be_logout.php";
-                }
-            });
-        });
-    </script>
+      Swal.fire({
+        title: "SIGN OUT",
+        text: "Are you sure you want to logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Logout"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "backend/be_logout.php";
+        }
+      });
+    });
+  </script>
 
 </body>
 

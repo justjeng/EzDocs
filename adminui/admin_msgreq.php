@@ -13,9 +13,9 @@ include_once("../_conn/connection.php");
     include("../_includes/styles.php");
     include("../_includes/scripts.php");
 
-    $pnum = "";
-    if (isset($_GET['phoneNumber'])) {
-        $pnum = $_GET['phoneNumber'];
+    $email = "";
+    if (isset($_GET['emailAddress'])) {
+        $email = $_GET['emailAddress'];
     }
 
     ?>
@@ -27,12 +27,12 @@ include_once("../_conn/connection.php");
         <h1 class="font-bold text-[26px] text-white">EZDocs</h1>
     </nav>
 
-    <div class="container pt-5">
+    <div class="container pt-4">
 
-        <form class="shadow-md rounded p-3 w-full max-w-[500px] m-auto" method="POST" action="../smsnotif.php">
+        <form class="shadow-md rounded p-3 w-full max-w-[500px] m-auto" method="POST" action="../backend/admin/be_emailnotif.php">
             <h1 class="text-[32px] !text-left">Messaging</h1>
             <p class="text-[14px] text-gray-600 mb-4">
-                Message the student to claim the requested document.
+                Email the student to claim the requested document.
             </p>
             <?php
             if (isset($_GET['errorMsg'])) {
@@ -43,8 +43,8 @@ include_once("../_conn/connection.php");
             ?>
 
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" name="pnumber" placeholder="+639000000000" value="<?php echo $pnum?>">
+                <label for="exampleFormControlInput1" class="form-label">Email</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="email" value="<?php echo $email?>" readonly>
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Message</label>

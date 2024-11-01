@@ -3,6 +3,7 @@
         "infobip/infobip-api-php-client": "^5.1",
         "dompdf/dompdf": "^3.0",
         "setasign/tfpdf": "^1.33",
-        "tecnickcom/tcpdf": "^6.7"
+        "tecnickcom/tcpdf": "^6.7",
+        "phpmailer/phpmailer": "^6.9"
     }
 }

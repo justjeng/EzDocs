@@ -15,9 +15,9 @@ include_once("_conn/session.php");
 </head>
 
 <body>
-
+   
     <nav class="flex flex-row items-center justify-between px-10 py-4 bg-emerald-900">
-        <h1 class="font-bold text-[26px] text-white">EZDocs</h1>      
+        <h1 class="font-bold text-[26px] text-white">EZDocs</h1>
     </nav>
 
     <div class="container pt-5">
@@ -34,7 +34,7 @@ include_once("_conn/session.php");
                       </div>";
             }
             ?>
-            
+
             <div class="grid grid-cols-2 gap-x-2">
                 <div class="col-span-2 mb-2">
                     <label>Student ID No.</label>
@@ -48,7 +48,7 @@ include_once("_conn/session.php");
                 <div class="col-span-2 mb-2">
                     <label>Grade Level</label>
                     <select name="gradelv" class="form-control" required>
-                        <option disabled selected value="">-- Your Grade Level on the Documnet --</option>
+                        <option disabled selected value="">-- Your Grade Level on the Document --</option>
                         <option value="Grade 7">Grade 7</option>
                         <option value="Grade 8">Grade 8</option>
                         <option value="Grade 9">Grade 9</option>
@@ -71,7 +71,7 @@ include_once("_conn/session.php");
                 </div>
                 <div class="col-span-2 mb-2">
                     <label>Date Requested</label>
-                    <input class="form-control" type="date" name="reqDate" value="<?php echo date('Y-m-d'); ?>">
+                    <input class="form-control" type="date" name="reqDate" value="<?php echo date('Y-m-d'); ?>" readonly>
                 </div>
             </div>
 

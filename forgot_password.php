@@ -85,7 +85,7 @@
             <form class="w-full max-w-[450px]" method="POST" action="password_recovery.php">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    <input type="email" class="form-control" name="emailAddress" id="exampleInputEmail1" aria-describedby="emailHelp"
                         name="inputEmailAddress" value="<?php if(isset($_GET['emailAddress'])) { echo $_GET['emailAddress']; } ?>">
                 </div>
                 <button type="submit" class="btn btn-success w-full py-2" name="btnRecoverPassword">Send Recovery Email</button>

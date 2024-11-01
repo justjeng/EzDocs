@@ -1,6 +1,34 @@
 <?php
-include_once("../_conn/session.php");
+session_start();
+include("../_conn/connection.php");
+// Get and sanitize the studentId from the URL
+$studentId = isset($_GET['studentId']) ? mysqli_real_escape_string($conn, $_GET['studentId']) : null;
+$studentDetails = null;
+
+if ($studentId) {
+    // Query to retrieve student details
+    $query = "SELECT studentLRN, fullName, gradelvl, reqDoc, reqDate, claimDate FROM ezdrequesttbl WHERE studentLRN = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $studentId); // Bind $studentId as an integer
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            // Fetch student data as an associative array
+            $studentDetails = $result->fetch_assoc();
+        }
+    }
+
+    $stmt->close();
+}
+
+// Close database connection
+$conn->close();
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +44,7 @@ include_once("../_conn/session.php");
 
 <body>
 
-    <nav class="flex flex-row items-center justify-between px-10 py-4 bg-slate-900">
+    <nav class="flex flex-row items-center justify-between px-10 py-4 bg-emerald-900">
         <h1 class="font-bold text-[26px] text-white">EZDocs</h1>
         <ul class="flex flex-row gap-x-4 !p-0 !m-0 list-none">
             <li>
@@ -25,22 +53,20 @@ include_once("../_conn/session.php");
                 </a>
             </li>
             <li>
-                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="#">
-                    FAQs
+                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="../backend/admin/claimed_history.php">
+                    Claimed History
                 </a>
             </li>
             <li>
-                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" id="btnLogout"
-                    type="button">
+                <button class="block text-white text-[17px] font-regular hover:no-underline px-3" id="btnLogout">
                     Logout
-                </a>
+                </button>
             </li>
         </ul>
     </nav>
-
     <div class="container pt-5">
 
-        <form method="POST" class="shadow-md rounded p-3 w-full max-w-[500px] m-auto" action="../backend/admin/be_adminedit.php">
+        <form method="POST" class="shadow-md rounded p-3 w-full max-w-[500px] m-auto" action="../backend/admin/be_admineditreq.php">
             <h1 class="text-[32px] !text-left">Welcome to EzDocs</h1>
             <p class="text-[14px] text-gray-600 mb-4">
                 Update student requested document.
@@ -54,51 +80,59 @@ include_once("../_conn/session.php");
             }
 
             ?>
-            
+
             <div class="grid grid-cols-2 gap-x-2">
                 <div class="col-span-2 mb-2">
                     <label>Student ID No.</label>
-                    <input class="form-control" type="text" name="studentLRN">
+                    <input class="form-control" type="text" name="studentLRN"
+                        value="<?php echo htmlspecialchars($studentDetails['studentLRN'] ?? ''); ?>" readonly>
                 </div>
+
                 <div class="col-span-2 mb-2">
                     <label>Student Name</label>
-                    <input class="form-control" type="text" name="studentName">
+                    <input class="form-control" type="text" name="studentName"
+                        value="<?php echo htmlspecialchars(($studentDetails['fullName'] ?? '')); ?>" readonly>
                 </div>
 
                 <div class="col-span-2 mb-2">
                     <label>Grade Level</label>
-                    <select name="gradelv" class="form-control">
-                        <option disabled selected>-- Select option --</option>
-                        <option value="gd7">Grade 7</option>
-                        <option value="gd8">Grade 8</option>
-                        <option value="gd9">Grade 9</option>
-                        <option value="gd10">Grade 10</option>
-                        <option value="gd11">Grade 11</option>
-                        <option value="gd12">Grade 12</option>
+                    <select name="gradelvl" class="form-control">
+                        <option disabled>-- Select option --</option>
+                        <option value="Grade 7" <?= ($studentDetails['gradelvl'] == '7' ? 'selected' : ''); ?>>Grade 7</option>
+                        <option value="Grade 8" <?= ($studentDetails['gradelvl'] == '8' ? 'selected' : ''); ?>>Grade 8</option>
+                        <option value="Grade 9" <?= ($studentDetails['gradelvl'] == '9' ? 'selected' : ''); ?>>Grade 9</option>
+                        <option value="Grade 10" <?= ($studentDetails['gradelvl'] == '10' ? 'selected' : ''); ?>>Grade 10</option>
+                        <option value="Grade 11" <?= ($studentDetails['gradelvl'] == '11' ? 'selected' : ''); ?>>Grade 11</option>
+                        <option value="Grade 12" <?= ($studentDetails['gradelvl'] == '12' ? 'selected' : ''); ?>>Grade 12</option>
                     </select>
                 </div>
-
                 <div class="col-span-2 mb-2">
                     <label>Document Request</label>
                     <select name="reqDoc" class="form-control">
                         <option disabled selected>-- Select option --</option>
-                        <option value="Certificate of Enrollment">Certificate of Enrollment</option>
-                        <option value="Good Moral">Good Moral</option>
-                        <option value="Form 137/138">Form 137/138</option>
-                        <option value="Diploma">Diploma</option>
+                        <option value="Certificate of Enrollment" <?= ($studentDetails['reqDoc'] == 'Certificate of Enrollment' ? 'selected' : ''); ?>>Certificate of Enrollment</option>
+                        <option value="Certificate of Good Moral" <?= ($studentDetails['reqDoc'] == 'Certificate of Good Moral' ? 'selected' : ''); ?>>Certificate of Good Moral</option>
+                        <option value="Form 137" <?= ($studentDetails['reqDoc'] == 'Form 137' ? 'selected' : ''); ?>>Form 137 (SF10)</option>
+                        <option value="Form 138" <?= ($studentDetails['reqDoc'] == 'Form 138' ? 'selected' : ''); ?>>Form 138 (SF9)</option>
+                        <option value="Diploma" <?= ($studentDetails['reqDoc'] == 'Diploma' ? 'selected' : ''); ?>>Diploma</option>
                     </select>
                 </div>
+
                 <div class="col-span-2 mb-2">
-                    <label>Date</label>
-                    <input class="form-control" type="date" name="reqDate" value="<?php echo date('Y-m-d'); ?>">
+                    <label>Request Date</label>
+                    <input class="form-control" type="date" name="reqDate" value="<?= $studentDetails['reqDate'] ?>" readonly>
                 </div>
+                <!-- <div class="col-span-2 mb-2">
+                    <label>Claim Date</label>
+                    <input class="form-control" type="date" name="claimDate" value="<?= $studentDetails['claimDate'] ?>">
+                </div> -->
             </div>
 
             <button class="btn btn-primary py-2 mt-2 w-full" type="submit" name="btneditdoc">Save</button>
 
         </form>
     </div>
-    
+
     <script>
         $('#btnLogout').click(function(e) {
             Swal.fire({

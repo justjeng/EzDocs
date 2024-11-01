@@ -14,7 +14,8 @@ $idsession = $_SESSION['studentId'];
 $sql = "SELECT s.* FROM student_tbl s JOIN ezdrequesttbl r ON s.studentID = r.studentLRN WHERE r.status = 'ready' AND s.studentId =  $idsession";
 $result = mysqli_query($conn, $sql);
 if (!$result || mysqli_num_rows($result) == 0) {
-    die("No results found or query failed: " . mysqli_error($conn));
+    $_SESSION['info'] = "There are no documents ready to claim.";
+    header('Location: index.php');
 }
 $row = mysqli_fetch_assoc($result);
 

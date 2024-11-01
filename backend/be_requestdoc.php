@@ -60,6 +60,7 @@ try {
             if (!mysqli_commit($conn)) {
                 header('Location: ../reqdocument.php?errorMsg=Something went wrong');
             } else {
+                $_SESSION['success'] = "Document request successful";
                 header('Location: ../index.php');
             }
         } else {

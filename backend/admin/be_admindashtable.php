@@ -5,7 +5,7 @@ include_once("../_includes/scripts.php");
 try {
     include("../_conn/connection.php");
 
-    $sql = "SELECT E.id, E.studentLRN, E.fullName, E.gradelvl, E.reqDoc, E.reqDate, E.status, S.phoneNumber FROM `ezdrequesttbl` E JOIN student_tbl S ON E.studentLRN = S.studentId WHERE E.status != 'claimed'";
+    $sql = "SELECT E.id, E.studentLRN, E.fullName, E.gradelvl, E.reqDoc, E.reqDate, E.status, S.phoneNumber, S.emailAddress FROM `ezdrequesttbl` E JOIN student_tbl S ON E.studentLRN = S.studentId WHERE E.status != 'claimed'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -30,25 +30,28 @@ try {
             $id = $row['id'];
 
             echo '<tr>
-                    <td class="align-middle">' . htmlspecialchars($row['studentLRN']) . '</td>
-                    <td class="align-middle">' . htmlspecialchars($row['fullName']) . '</td>
-                    <td class="align-middle">' . htmlspecialchars($row['gradelvl']) . '</td>
-                    <td class="align-middle">' . htmlspecialchars($row['reqDoc']) . '</td>
-                    <td class="align-middle">' . htmlspecialchars($reqDate) . '</td>
-                    <td class="align-middle">' . htmlspecialchars($claimDate) . '</td>
-                    <td class="align-middle status-' . strtolower($row['status']) . '">
-                        <select class="status-dropdown" data-id="' . $id . '">
-                            <option value="pending" ' . ($row['status'] == 'pending' ? 'selected' : '') . '>Pending</option>
-                            <option value="processing" ' . ($row['status'] == 'processing' ? 'selected' : '') . '>Processing</option>
-                            <option value="ready" ' . ($row['status'] == 'ready' ? 'selected' : '') . '>Ready</option>
-                            <option value="claimed" ' . ($row['status'] == 'claimed' ? 'selected' : '') . '>Claimed</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a class="" href="admin_msgreq.php?phoneNumber=' . $row['phoneNumber'] . '">Message</a>
-                        <a class="" href="admineditreq.php">Edit</a>
-                    </td>
-                 </tr>';
+                <td class="align-middle">' . htmlspecialchars($row['studentLRN']) . '</td>
+                <td class="align-middle">' . htmlspecialchars($row['fullName']) . '</td>
+                <td class="align-middle">' . htmlspecialchars($row['gradelvl']) . '</td>
+                <td class="align-middle">' . htmlspecialchars($row['reqDoc']) . '</td>
+                <td class="align-middle">' . htmlspecialchars($reqDate) . '</td>
+                <td class="align-middle">' . htmlspecialchars($claimDate) . '</td>
+                <td class="align-middle status-' . strtolower($row['status']) . '">
+                    <select class="status-dropdown" data-id="' . $id . '">
+                        <option value="pending" ' . ($row['status'] == 'pending' ? 'selected' : '') . '>Pending</option>
+                        <option value="processing" ' . ($row['status'] == 'processing' ? 'selected' : '') . '>Processing</option>
+                        <option value="ready" ' . ($row['status'] == 'ready' ? 'selected' : '') . '>Ready</option>
+                        <option value="claimed" ' . ($row['status'] == 'claimed' ? 'selected' : '') . '>Claimed</option>
+                    </select>
+                </td>
+                <td>
+                    ' . ($row['status'] == 'ready'
+                    ? '<a href="admin_msgreq.php?emailAddress=' . $row['emailAddress'] . '">Message</a>'
+                    : '<span style="color: gray; cursor: not-allowed;">Message</span>') . ' |
+                    <a href="admineditreq.php?studentId=' . $row['studentLRN'] . '">Edit</a> |
+                    <a class="delete-link" href="../backend/admin/be_requestdelete.php?studentLRN=' . $row['studentLRN'] . '" id="btnDelete" data-id="' . $row['studentLRN'] . '">Delete</a>
+                </td>
+            </tr>';
         }
 
         echo '</tbody></table>';

@@ -56,6 +56,7 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
             'PHPStan\\PhpDocParser\\' => 21,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
         array (
@@ -191,6 +192,10 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         'PHPStan\\PhpDocParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpstan/phpdoc-parser/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Masterminds\\' => 
         array (

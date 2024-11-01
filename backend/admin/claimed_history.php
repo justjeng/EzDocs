@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../../_conn/connection.php");
 include("../../_includes/styles.php");
 include("../../_includes/scripts.php");
@@ -50,20 +51,32 @@ include("../../_includes/scripts.php");
     <nav class="flex flex-row items-center justify-between px-10 py-4 bg-emerald-900">
         <h1 class="font-bold text-[26px] text-white">EZDocs</h1>
         <ul class="flex flex-row gap-x-4 !p-0 !m-0 list-none">
+            <?php if ($_SESSION['adminType'] == 'super admin') { ?>
+                <li>
+                    <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="be_adminaccounts.php">
+                        Admin Accounts
+                    </a>
+                </li>
+                <li>
+                    <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="be_dataanalytics.php">
+                        Data Analytics
+                    </a>
+                </li>
+            <?php } ?>
             <li>
                 <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="../../adminui/dashboard.php">
                     Dashboard
                 </a>
             </li>
             <li>
-                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="#">
-                    Claimed History
+                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="be_studentacc.php">
+                    Student
                 </a>
             </li>
             <li>
-                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" id="btnLogout" type="button">
+                <button class="block text-white text-[17px] font-regular hover:no-underline px-3" id="btnLogout">
                     Logout
-                </a>
+                </button>
             </li>
         </ul>
     </nav>
@@ -77,12 +90,16 @@ include("../../_includes/scripts.php");
             die("Query failed: " . mysqli_error($conn));
         }
 
+
         $numRows = mysqli_num_rows($claimedResult);
-        echo "<p>Number of claimed documents: $numRows</p>";
+        echo '<div class="flex flex-col items-center mt-2 mb-1">
+                <p class="font-bold text-[26px]">' . htmlspecialchars($numRows) . '</p>
+                <h2 class="font-medium text-[18px]">Number of claimed documents</h2>
+             </div>';
 
         if ($numRows > 0) {
             echo '<div class="table-container">';
-            echo '<h2>Claimed Documents</h2>';
+            // echo '<h2>Claimed Documents</h2>';
             echo '<table class="table table-hover" id="documentTableClaimed">
                     <thead>
                         <tr class="table-apple-green/  /">
@@ -102,8 +119,8 @@ include("../../_includes/scripts.php");
                 echo '<td>' . htmlspecialchars($claimedRow['fullName']) . '</td>';
                 echo '<td>' . htmlspecialchars($claimedRow['gradelvl']) . '</td>';
                 echo '<td>' . htmlspecialchars($claimedRow['reqDoc']) . '</td>';
-                echo '<td>' . htmlspecialchars($claimedRow['reqDate']) . '</td>';
-                echo '<td>' . date('Y-m-d H:i:s') . '</td>';
+                echo '<td>' . htmlspecialchars(date('F d, Y', strtotime($claimedRow['reqDate']))) . '</td>';
+                echo '<td>' . htmlspecialchars(date('F d, Y h:m A', strtotime($claimedRow['claimDate']))) . '</td>';
                 echo '</tr>';
             }
 
@@ -118,9 +135,28 @@ include("../../_includes/scripts.php");
     }
 
     ?>
-
     <script>
-        // Add JavaScript code here
+        $(document).ready(function() {
+            $('#documentTableClaimed').DataTable();
+        });
+    </script>
+    <script>
+        $('#btnLogout').click(function(e) {
+
+            Swal.fire({
+                title: "SIGN OUT",
+                text: "Are you sure you want to logout?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Logout"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "be_adminlogout.php";
+                }
+            });
+        });
     </script>
 
 </body>

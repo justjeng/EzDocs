@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
+    <!-- Add the Google reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- Includes -->
     <?php
     include("../_includes/styles.php");
@@ -20,7 +21,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: url('../logo/background.jpg'); 
+            background-image: url('../logo/background.jpg');
             background-size: cover;
             background-position: center;
             position: relative;
@@ -62,7 +63,7 @@
 <body>
 
     <div class="overlay"></div>
-    
+
     <div class="container flex flex-col items-center justify-center w-full">
 
         <div class="form-container shadow-lg">
@@ -85,7 +86,9 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        name="inputEmailAddress" value="<?php if(isset($_GET['emailAddress'])) { echo $_GET['emailAddress']; } ?>">
+                        name="inputEmailAddress" value="<?php if (isset($_GET['emailAddress'])) {
+                                                            echo $_GET['emailAddress'];
+                                                        } ?>">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -95,6 +98,9 @@
                             password?</a>
                     </div>
                 </div>
+
+                <!-- Google reCAPTCHA widget -->
+                <div class="g-recaptcha mb-3" data-sitekey="6LdwZG4qAAAAAJ8RumcDEYDSQxQjFEQuAhMvZzxP"></div>
                 <button type="submit" class="btn btn-success w-full py-2" name="btnLogin">Login</button>
             </form>
 

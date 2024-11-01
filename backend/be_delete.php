@@ -10,7 +10,7 @@ try {
         mysqli_query($conn, $sql);
 
         // Delete student requests from request_tbl
-        $sql = "DELETE FROM ezdrequesttbl WHERE studentId = $studentId";
+        $sql = "DELETE FROM ezdrequesttbl WHERE studentLRN = $studentId";
         mysqli_query($conn, $sql);
 
         // Redirect back to student_info.php
