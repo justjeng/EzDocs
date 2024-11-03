@@ -103,7 +103,7 @@ include("../../_includes/scripts.php");
             echo '<table class="table table-hover" id="documentTableClaimed">
                     <thead>
                         <tr class="table-apple-green/  /">
-                            <th scope="col">ID</th>
+                           
                             <th scope="col">Full Name</th>
                             <th scope="col">Grade Level</th>
                             <th scope="col">Requested Document</th>
@@ -115,7 +115,6 @@ include("../../_includes/scripts.php");
 
             while ($claimedRow = mysqli_fetch_assoc($claimedResult)) {
                 echo '<tr>';
-                echo '<td>' . htmlspecialchars($claimedRow['id']) . '</td>';
                 echo '<td>' . htmlspecialchars($claimedRow['fullName']) . '</td>';
                 echo '<td>' . htmlspecialchars($claimedRow['gradelvl']) . '</td>';
                 echo '<td>' . htmlspecialchars($claimedRow['reqDoc']) . '</td>';

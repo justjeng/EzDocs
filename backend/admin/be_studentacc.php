@@ -108,7 +108,7 @@ session_start();
                 echo '<table class="table table-hover" id="documentTableStudent' . htmlspecialchars($gradeLevel) . '">
                        <thead>
                            <tr>
-                               <th>Student ID</th>
+                               <th>Student LRN</th>
                                <th>Student Name</th>
                                <th>Phone Number</th>
                                <th>Email</th>

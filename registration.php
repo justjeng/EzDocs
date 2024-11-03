@@ -147,7 +147,7 @@
                 <p class="text-[14px] font-medium text-sky-600 mb-2">Personal Information</p>
 
                 <div class="grid grid-cols-4 gap-x-3">
-                    <div class="mb-3 col-span-4">
+                    <div class="mb-3 col-span-4 sm:col-span-4">
                         <label for="inputStudentId" class="form-label">LRN</label>
                         <input type="text" class="form-control" id="inputStudentId" aria-describedby="studentId"
                             name="inputStudentId" required value="<?php if (isset($_GET['studentId'])) {
@@ -155,7 +155,7 @@
                                                                     } ?>">
                     </div>
 
-                    <div class="mb-3 col-span-2">
+                    <div class="mb-3 col-span-4 sm:col-span-2">
                         <label for="inputFirstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="inputFirstname" aria-describedby="firstname"
                             name="inputFirstname" required value="<?php if (isset($_GET['firstname'])) {
@@ -163,7 +163,7 @@
                                                                     } ?>">
                     </div>
 
-                    <div class="mb-3 col-span-2">
+                    <div class="mb-3 col-span-4 sm:col-span-2">
                         <label for="inputMiddlename" class="form-label">Middle Name</label>
                         <input type="text" class="form-control" id="inputMiddlename" aria-describedby="middleName"
                             name="inputMiddlename" value="<?php if (isset($_GET['middlename'])) {
@@ -171,7 +171,7 @@
                                                             } ?>">
                     </div>
 
-                    <div class="mb-3 col-span-3">
+                    <div class="mb-3 col-span-4 sm:col-span-3">
                         <label for="inputLastname" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="inputLastname" aria-describedby="lastName"
                             name="inputLastname" required value="<?php if (isset($_GET['lastname'])) {
@@ -179,7 +179,7 @@
                                                                     } ?>">
                     </div>
 
-                    <div class="mb-3 col-span-1">
+                    <div class="mb-3 col-span-4 sm:col-span-1">
                         <label for="inputSuffix" class="form-label">Suffix</label>
                         <input type="text" class="form-control" id="inputSuffix" aria-describedby="suffix"
                             name="inputSuffix" value="<?php if (isset($_GET['suffix'])) {
@@ -187,7 +187,7 @@
                                                         } ?>">
                     </div>
 
-                    <div class="mb-3 col-span-1">
+                    <div class="mb-3 col-span-4 sm:col-span-1">
                         <label for="inputGradeLevel" class="form-label">Grade Level</label>
                         <select class="form-control" name="inputGradeLevel" id="inputGradeLevel" required>
                             <option disabled selected></option>
@@ -209,7 +209,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3 col-span-3">
+                    <div class="mb-3 col-span-4 sm:col-span-3">
                         <label for="inputPhoneNumber" class="form-label">Phone Number</label>
                         <input type="tel" class="form-control" id="inputPhoneNumber" aria-describedby="phoneNumber"
                             name="inputPhoneNumber" required value="<?php if (isset($_GET['inputPhoneNumber'])) {
@@ -222,7 +222,7 @@
                 <p class="text-[14px] font-medium text-sky-600 mt-4 mb-2">Account Details</p>
 
                 <div class="grid grid-cols-2 gap-x-3">
-                    <div class="mb-3 col-span-2">
+                    <div class="mb-3 col-span-4 sm:col-span-2">
                         <label for="inputEmailAddress" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="inputEmailAddress" aria-describedby="emailAddress"
                             name="inputEmailAddress" required value="<?php if (isset($_GET['emailAddress'])) {
@@ -230,12 +230,12 @@
                                                                         } ?>">
                     </div>
 
-                    <div class="mb-3 col-span-1">
+                    <div class="mb-3 col-span-4 sm:col-span-1">
                         <label for="inputPassword" class="form-label">Password</label>
                         <input type="password" class="form-control" id="inputPassword" name="inputPassword" required>
                     </div>
 
-                    <div class="mb-3 col-span-1">
+                    <div class="mb-3 col-span-4 sm:col-span-1">
                         <label for="inputConfirmPassword" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="inputConfirmPassword" name="inputConfirmPassword" required>
                     </div>

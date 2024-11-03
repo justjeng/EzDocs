@@ -128,6 +128,77 @@ include_once("_conn/session.php");
     .btn:hover {
       background-color: #FFA07A;
     }
+
+    /* Desktop navbar styles */
+    .desktop-nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background-color: #064e3b;
+    }
+
+    /* Mobile navbar styles */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background-color: #064e3b;
+      padding: 1rem;
+    }
+
+    .mobile-nav h1 {
+      font-size: 26px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .mobile-nav ul {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+
+    .mobile-nav li {
+      margin: 0.5rem 0;
+    }
+
+    .mobile-nav a,
+    .mobile-nav button {
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: normal;
+      padding: 0.5rem;
+      display: block;
+    }
+
+    .mobile-nav a:hover,
+    .mobile-nav button:hover {
+      text-decoration: none;
+    }
+
+    /* Show mobile nav on smaller screens */
+    @media (max-width: 768px) {
+      .desktop-nav {
+        display: none;
+      }
+
+      .mobile-nav {
+        display: flex;
+      }
+    }
+
+    /* Show desktop nav on larger screens */
+    @media (min-width: 769px) {
+      .desktop-nav {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: none;
+      }
+    }
   </style>
 
 </head>
@@ -175,7 +246,8 @@ include_once("_conn/session.php");
     <?php
     unset($_SESSION['info']); ?>
   <?php } ?>
-  <nav class="flex flex-row items-center justify-between px-10 py-4 bg-emerald-900">
+  <!-- Desktop Navigation -->
+  <nav class="desktop-nav px-10 py-4 bg-emerald-900">
     <h1 class="font-bold text-[26px] text-white">EZDocs</h1>
     <ul class="flex flex-row gap-x-4 !p-0 !m-0 list-none">
       <li>
@@ -189,12 +261,29 @@ include_once("_conn/session.php");
         </a>
       </li>
       <li>
-        <button class="block text-white text-[17px] font-regular hover:no-underline px-3" id="btnLogout">
+        <button class="block text-white text-[17px] font-regular hover:no-underline px-3 btnLogout" id="btnLogout">
           Logout
         </button>
       </li>
     </ul>
   </nav>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-nav">
+    <h1><u>EZDocs</u></h1>
+    <ul>
+      <li>
+        <a href="profile.php">Profile</a>
+      </li>
+      <li>
+        <a href="claim/claim_history.php">Claimed History</a>
+      </li>
+      <li>
+        <button class="btnLogout">Logout</button>
+      </li>
+    </ul>
+  </nav>
+
 
   <div class="container pt-5">
     <div class="flex flex-row items-center justify-between padding-20px">
@@ -286,7 +375,7 @@ include_once("_conn/session.php");
       $('#documentTableStudent').DataTable();
     });
 
-    $('#btnLogout').click(function(e) {
+    $('.btnLogout').click(function(e) {
 
       Swal.fire({
         title: "SIGN OUT",

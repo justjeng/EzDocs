@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $emailAddress = mysqli_real_escape_string($conn, $_POST['emailAddress']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $gradeLevel = mysqli_real_escape_string($conn, $_POST['gradeLevel']);
-    
+
     // If password field is not empty, hash the new password
     if (!empty($password)) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -63,6 +63,7 @@ mysqli_free_result($result);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,23 +75,28 @@ mysqli_free_result($result);
             margin: 0 auto;
             padding: 20px;
         }
+
         form label {
             display: block;
             margin: 10px 0 5px;
         }
-        form input, form select {
+
+        form input,
+        form select {
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+
         form input[type="submit"] {
             background-color: #FFC107;
             color: white;
             border: none;
             cursor: pointer;
         }
+
         form input[type="submit"]:hover {
             background-color: #FFA07A;
         }
@@ -101,18 +107,124 @@ mysqli_free_result($result);
             border-radius: 4px;
             margin-top: 20px;
         }
+
+        /* Header Styles */
+        nav {
+            background-color: #8BC34A;
+            /* Mint green */
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav h1 {
+            color: #FFFFFF;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav li {
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+
+        /* Desktop navbar styles */
+        .desktop-nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2.5rem;
+            background-color: #064e3b;
+        }
+
+        /* Mobile navbar styles */
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            background-color: #064e3b;
+            padding: 1rem;
+        }
+
+        .mobile-nav h1 {
+            font-size: 26px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .mobile-nav ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        .mobile-nav li {
+            margin: 0.5rem 0;
+        }
+
+        .mobile-nav a,
+        .mobile-nav button {
+            color: white;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: normal;
+            padding: 0.5rem;
+            display: block;
+        }
+
+        .mobile-nav a:hover,
+        .mobile-nav button:hover {
+            text-decoration: none;
+        }
+
+        /* Show mobile nav on smaller screens */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+        }
+
+        /* Show desktop nav on larger screens */
+        @media (min-width: 769px) {
+            .desktop-nav {
+                display: flex;
+            }
+
+            .mobile-nav {
+                display: none;
+            }
+        }
     </style>
 </head>
 <?php
-    include("_includes/styles.php");
-    include("_includes/scripts.php");
-    ?>
+include("_includes/styles.php");
+include("_includes/scripts.php");
+?>
+
 <body>
-    <nav class="flex flex-row items-center justify-between px-10 py-4 bg-emerald-900">
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav px-10 py-4 bg-emerald-900">
         <h1 class="font-bold text-[26px] text-white">EZDocs</h1>
         <ul class="flex flex-row gap-x-4 !p-0 !m-0 list-none">
             <li>
-                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" href="index.php">
+                <a class="block text-white text-sm md:text-base font-regular hover:no-underline px-3" href="index.php">
                     Dashboard
                 </a>
             </li>
@@ -122,12 +234,29 @@ mysqli_free_result($result);
                 </a>
             </li>
             <li>
-                <a class="block text-white text-[17px] font-regular hover:no-underline px-3" id="btnLogout" type="button">
+                <button class="block text-white text-[17px] font-regular hover:no-underline px-3 btnLogout" id="btnLogout">
                     Logout
-                </a>
+                </button>
             </li>
         </ul>
     </nav>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <h1><u>EZDocs</u></h1>
+        <ul>
+            <li>
+                <a href="index.php">Dashboard</a>
+            </li>
+            <li>
+                <a href="claim/claim_history.php">Claimed History</a>
+            </li>
+            <li>
+                <button class="btnLogout">Logout</button>
+            </li>
+        </ul>
+    </nav>
+
 
     <div class="container">
         <h1>Edit Your Information</h1>
@@ -182,7 +311,7 @@ mysqli_free_result($result);
     <script src="path/to/jquery.min.js"></script>
     <script src="path/to/bootstrap.min.js"></script>
     <script>
-        $('#btnLogout').click(function(e) {
+        $('.btnLogout').click(function(e) {
             Swal.fire({
                 title: "SIGN OUT",
                 text: "Are you sure you want to logout?",
@@ -199,4 +328,5 @@ mysqli_free_result($result);
         });
     </script>
 </body>
+
 </html>
