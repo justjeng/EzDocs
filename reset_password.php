@@ -23,6 +23,10 @@ if (isset($_GET['token'])) {
                 $query = "UPDATE student_tbl SET password = '$hashedPassword' WHERE id = '$student_id'";
                 mysqli_query($conn, $query);
 
+                // Delete token
+                $delete = "DELETE FROM password_recovery WHERE token = '$token'";
+                mysqli_query($conn, $delete);
+
                 $_SESSION['success'] = "Password reset successfully!";
                 header("Location: login.php");
                 exit();
