@@ -62,6 +62,49 @@
 </head>
 
 <body>
+    <?php if (isset($_SESSION['success'])) { ?>
+
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                toast: true,
+                position: 'center',
+                iconColor: 'green',
+                customClass: {
+                    popup: 'colored-toast',
+                },
+                customClass: 'swal-wide',
+                text: '<?= $_SESSION['success'] ?>',
+                confirmButtonText: 'OK'
+            });
+        </script>
+
+
+        <?php
+        unset($_SESSION['success']); ?>
+
+    <?php } else if (isset($_SESSION['error'])) { ?>
+
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                toast: true,
+                position: 'center',
+                iconColor: 'red',
+                customClass: 'swal-wide',
+                customClass: {
+                    popup: 'colored-toast',
+                },
+                text: '<?= $_SESSION['error'] ?>',
+                confirmButtonText: 'OK'
+            });
+        </script>
+
+    <?php
+        unset($_SESSION['error']);
+    } ?>
     <div class="overlay"></div>
 
     <div class="container flex flex-col items-center justify-center w-full">

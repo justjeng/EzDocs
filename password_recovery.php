@@ -1,14 +1,21 @@
 <?php
+session_start();
 include("_conn/connection.php"); // Ensure this file initializes $conn
- // Use PHPMailer to send the email
- require 'vendor/autoload.php';
- use PHPMailer\PHPMailer\PHPMailer;
- use PHPMailer\PHPMailer\Exception;
+// Use PHPMailer to send the email
+require 'vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // Check if the 'emailAddress' is set in $_POST
 if (isset($_POST['emailAddress'])) {
     $email = $_POST['emailAddress'];
 
+    if (empty($email)) {
+        $_SESSION['error'] = "No Email Address provided.";
+        header("Location: forgot_password.php");
+        exit();
+    }
     // Verify the $conn connection
     if (!$conn) {
         die("Database connection failed.");
@@ -32,7 +39,7 @@ if (isset($_POST['emailAddress'])) {
         $stmt->bind_param("iss", $student_id, $token, $expires_at);
         $stmt->execute();
 
-       
+
         $mail = new PHPMailer(true);
         try {
             // Server settings
@@ -44,7 +51,7 @@ if (isset($_POST['emailAddress'])) {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom('your-email@example.com', 'Your Site Name');
+            $mail->setFrom('admin@gmail.com', 'EzDocs');
             $mail->addAddress($email);
 
             $mail->isHTML(true);
@@ -52,14 +59,22 @@ if (isset($_POST['emailAddress'])) {
             $mail->Body = "Click the link to reset your password: <a href='http://localhost/EzDocs/reset_password.php?token=$token'>Reset Password</a>";
 
             $mail->send();
-            echo "Password recovery email sent successfully!";
+
+            $_SESSION['success'] = "Password reset link has been sent to " . $email;
+            header("Location: forgot_password.php");
+            exit();
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $_SESSION['error'] = "Password reset link could not be sent.";
+            header("Location: forgot_password.php");
+            exit();
         }
     } else {
-        echo "Email address not found.";
+        $_SESSION['error'] = "Account cannot be found.";
+        header("Location: forgot_password.php");
+        exit();
     }
 } else {
-    echo "No email address provided.";
+    $_SESSION['error'] = "No Email Address provided.";
+    header("Location: forgot_password.php");
+    exit();
 }
-?>

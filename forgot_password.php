@@ -8,6 +8,7 @@
 
     <!-- Includes -->
     <?php
+    session_start();
     include("_includes/styles.php");
     include("_includes/scripts.php");
     ?>
@@ -20,7 +21,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: url('logo/background.jpg'); 
+            background-image: url('logo/background.jpg');
             background-size: cover;
             background-position: center;
             position: relative;
@@ -55,14 +56,59 @@
         .text-white {
             color: black;
         }
+        swal-wide {
+            width: 500px !important;
+        }
     </style>
 
 </head>
 
 <body>
+    <?php if (isset($_SESSION['success'])) { ?>
 
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                toast: true,
+                position: 'center',
+                iconColor: 'green',
+                customClass: {
+                    popup: 'colored-toast',
+                },
+                customClass: 'swal-wide',
+                text: '<?= $_SESSION['success'] ?>',
+                confirmButtonText: 'OK'
+            });
+        </script>
+
+
+        <?php
+        unset($_SESSION['success']); ?>
+
+    <?php } else if (isset($_SESSION['error'])) { ?>
+
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                toast: true,
+                position: 'center',
+                iconColor: 'red',
+                customClass: 'swal-wide',
+                customClass: {
+                    popup: 'colored-toast',
+                },
+                text: '<?= $_SESSION['error'] ?>',
+                confirmButtonText: 'OK'
+            });
+        </script>
+
+    <?php
+        unset($_SESSION['error']);
+    } ?>
     <div class="overlay"></div>
-    
+
     <div class="container flex flex-col items-center justify-center w-full">
 
         <div class="form-container shadow-lg">
@@ -86,7 +132,9 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                     <input type="email" class="form-control" name="emailAddress" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        name="inputEmailAddress" value="<?php if(isset($_GET['emailAddress'])) { echo $_GET['emailAddress']; } ?>">
+                        name="inputEmailAddress" value="<?php if (isset($_GET['emailAddress'])) {
+                                                            echo $_GET['emailAddress'];
+                                                        } ?>">
                 </div>
                 <button type="submit" class="btn btn-success w-full py-2" name="btnRecoverPassword">Send Recovery Email</button>
             </form>
