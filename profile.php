@@ -20,7 +20,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $gradeLevel = mysqli_real_escape_string($conn, $_POST['gradeLevel']);
 
-    // If password field is not empty, hash the new password
+    // Handle file upload
+    if (isset($_FILES['profilePhoto']) && $_FILES['profilePhoto']['error'] == 0) {
+        $photoName = $_FILES['profilePhoto']['name'];
+        $photoTmpName = $_FILES['profilePhoto']['tmp_name'];
+        $photoSize = $_FILES['profilePhoto']['size'];
+        $photoError = $_FILES['profilePhoto']['error'];
+        $photoType = $_FILES['profilePhoto']['type'];
+
+        // Check file type and size (e.g., max 2MB)
+        $allowed = ['jpg', 'jpeg', 'png'];
+        $fileExt = strtolower(pathinfo($photoName, PATHINFO_EXTENSION));
+
+        if (in_array($fileExt, $allowed) && $photoSize <= 2 * 1024 * 1024) {
+            $newPhotoName = "profile_" . $studentId . "." . $fileExt;
+            $photoPath = "uploads/" . $newPhotoName;
+
+            if (move_uploaded_file($photoTmpName, $photoPath)) {
+                // Save the path to the database
+                $profilePhotoSql = ", profile_photo='$photoPath'";
+            } else {
+                $_SESSION['error'] = "Error uploading the file.";
+            }
+        } else {
+            $_SESSION['error'] = "Invalid file type or size.";
+        }
+    } else {
+        $profilePhotoSql = ""; // No photo update
+    }
+
+    // Update the database
     if (!empty($password)) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $updateSql = "UPDATE student_tbl SET 
@@ -32,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         emailAddress='$emailAddress',
                         password='$hashedPassword',
                         gradeLevel='$gradeLevel'
+                        $profilePhotoSql
                       WHERE studentId='$studentId'";
     } else {
         $updateSql = "UPDATE student_tbl SET 
@@ -42,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         phoneNumber='$phoneNumber',
                         emailAddress='$emailAddress',
                         gradeLevel='$gradeLevel'
+                        $profilePhotoSql
                       WHERE studentId='$studentId'";
     }
 
@@ -271,7 +302,11 @@ include("_includes/scripts.php");
         }
         ?>
         <div class="box">
-            <form method="POST" action="">
+            <form method="POST" action=""  enctype="multipart/form-data">
+
+                <label for="profilePhoto">Profile Photo:</label>
+                <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*">
+
                 <label for="firstname">First Name:</label>
                 <input type="text" id="firstname" name="firstname" value="<?php echo htmlspecialchars($student['firstname']); ?>" required>
 

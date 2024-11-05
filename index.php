@@ -2,7 +2,11 @@
 
 include_once("_conn/connection.php");
 include_once("_conn/session.php");
-
+$studentId = $_SESSION['studentId'];
+$studentSql = "SELECT * FROM student_tbl WHERE studentId='$studentId'";
+$result = mysqli_query($conn, $studentSql);
+$student = mysqli_fetch_assoc($result);
+mysqli_free_result($result);
 
 ?>
 
@@ -199,6 +203,57 @@ include_once("_conn/session.php");
         display: none;
       }
     }
+
+    .profile-container {
+      padding: 20px;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .profile-photo img {
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Mobile View */
+    @media (max-width: 640px) {
+      .profile-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .profile-info {
+        flex-direction: column;
+      }
+
+      .profile-photo img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .profile-container .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    /* Desktop View */
+    @media (min-width: 641px) {
+      .profile-container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .profile-photo img {
+        width: 100px;
+        height: 100px;
+      }
+    }
   </style>
 
 </head>
@@ -286,10 +341,20 @@ include_once("_conn/session.php");
 
 
   <div class="container pt-5">
-    <div class="flex flex-row items-center justify-between padding-20px">
-      <h1 class="text-[clamp(1rem,5vw,2rem)] font-bold">Hi there, <br><?php echo $_SESSION['fullName']; ?></h1>
-
-      <div class="flex flex-col gap-5">
+    <div class="profile-container flex flex-col sm:flex-row items-center justify-between padding-20px">
+      <div class="profile-info flex items-center">
+        <div class="profile-photo">
+          <?php if (!empty($student['profile_photo'])): ?>
+            <img src="<?= $student['profile_photo']; ?>" alt="Profile Photo" width="100" height="100">
+          <?php else: ?>
+            <img src="https://placehold.co/100x100" alt="Default Profile Photo" width="100" height="100">
+          <?php endif; ?>
+        </div>
+        <h1 class="text-[clamp(1rem,5vw,2rem)] font-bold">
+          Hi there,<br><?php echo $_SESSION['fullName']; ?>
+        </h1>
+      </div>
+      <div class="flex flex-col gap-5 mt-4 sm:mt-0">
         <a class="btn btn-primary px-6 py-2" href="reqdocument.php">Request Document</a>
       </div>
     </div>
