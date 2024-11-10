@@ -191,6 +191,7 @@
                         <label for="inputGradeLevel" class="form-label">Grade Level</label>
                         <select class="form-control" name="inputGradeLevel" id="inputGradeLevel" required>
                             <option disabled selected></option>
+
                             <option value="7" <?php if (isset($_GET['gradeLevel']) && $_GET['gradeLevel'] == '7')
                                                     echo 'selected'; ?>>Grade 7</option>
                             <option value="8" <?php if (isset($_GET['gradeLevel']) && $_GET['gradeLevel'] == '8')
@@ -206,6 +207,8 @@
                             <option value="12" <?php if (isset($_GET['gradeLevel']) && $_GET['gradeLevel'] == '12')
                                                     echo 'selected'; ?>>Grade 12
                             </option>
+                            <option value="graduate" <?php if (isset($_GET['gradeLevel']) && $_GET['gradeLevel'] == 'graduate')
+                                                            echo 'selected'; ?>>Graduate</option>
                         </select>
                     </div>
 
