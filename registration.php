@@ -187,6 +187,14 @@
                                                         } ?>">
                     </div>
 
+                    <div class="mb-3 col-span-4 sm:col-span-5">
+                        <label for="inputParent" class="form-label">Parent/Guardian Name</label>
+                        <input type="text" class="form-control" id="inputParent" aria-describedby="parent"
+                            name="inputParent" value="<?php if (isset($_GET['parent'])) {
+                                                            echo $_GET['parent'];
+                                                        } ?>">
+                    </div>
+
                     <div class="mb-3 col-span-4 sm:col-span-1">
                         <label for="inputGradeLevel" class="form-label">Grade Level</label>
                         <select class="form-control" name="inputGradeLevel" id="inputGradeLevel" required>

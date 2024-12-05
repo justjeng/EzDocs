@@ -5,7 +5,11 @@ include_once("../_includes/scripts.php");
 try {
     include("../_conn/connection.php");
 
-    $sql = "SELECT E.id, E.studentLRN, E.fullName, E.gradelvl, E.reqDoc, E.reqDate, E.status, S.phoneNumber, S.emailAddress FROM `ezdrequesttbl` E JOIN student_tbl S ON E.studentLRN = S.studentId WHERE E.status != 'claimed'";
+    $sql = "SELECT E.id, E.studentLRN, E.fullName, E.teacherName, E.gradelvl, E.reqDoc, E.reqDate, E.status,S.parent, S.phoneNumber, S.emailAddress 
+            FROM `ezdrequesttbl` E 
+            JOIN student_tbl S 
+            ON E.studentLRN = S.studentId 
+            WHERE E.status != 'claimed'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -14,6 +18,8 @@ try {
                     <tr>
                         <th scope="col">LRN</th>
                         <th scope="col">Student Name</th>
+                        <th scope="col">Parent/Guardian</th>
+                        <th scope="col">Teacher/Adviser</th>
                         <th scope="col">Grade Level</th>
                         <th scope="col">Document Name</th>
                         <th scope="col">Date Requested</th>
@@ -32,6 +38,8 @@ try {
             echo '<tr>
                 <td class="align-middle">' . htmlspecialchars($row['studentLRN']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['fullName']) . '</td>
+                <td class="align-middle">' . htmlspecialchars($row['parent']) . '</td>
+                <td class="align-middle">' . htmlspecialchars($row['teacherName']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['gradelvl']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['reqDoc']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($reqDate) . '</td>

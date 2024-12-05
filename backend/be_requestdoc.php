@@ -8,6 +8,8 @@ try {
 
         $studentid = $_SESSION['studentId'];
         $studentname = $_SESSION['fullName'];
+        $teachname = $_POST['teachName'];
+        $schoolyear = $_POST['schoolYear'];
         $gradelev = $_POST['gradelv'];
         $docreq = $_POST['reqDoc'];
         $datereq = $_POST['reqDate'];
@@ -46,7 +48,7 @@ try {
         ) {
             mysqli_autocommit($conn, FALSE);
 
-            $addRequestSql = "INSERT INTO ezdrequesttbl(studentLRN, fullName, gradelvl, reqDoc, reqDate) VALUES('$studentid', '$studentname', '$gradelev', '$docreq', '$datereq')";
+            $addRequestSql = "INSERT INTO ezdrequesttbl(studentLRN, fullName, teacherName, schoolYear, gradelvl, reqDoc, reqDate) VALUES('$studentid', '$studentname', '$teachname', $schoolyear, '$gradelev', '$docreq', '$datereq')";
 
             mysqli_query($conn, $addRequestSql);
 
