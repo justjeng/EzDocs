@@ -9,9 +9,9 @@ try {
         $sql = "DELETE FROM student_tbl WHERE studentId = $studentId";
         mysqli_query($conn, $sql);
 
-        // Delete student requests from request_tbl
-        $sql = "DELETE FROM ezdrequesttbl WHERE studentLRN = $studentId";
-        mysqli_query($conn, $sql);
+        // // Delete student requests from request_tbl
+        // $sql = "DELETE FROM ezdrequesttbl WHERE studentLRN = $studentId";
+        // mysqli_query($conn, $sql);
 
         // Redirect back to student_info.php
         header("Location: admin/be_studentacc.php");

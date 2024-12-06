@@ -2,12 +2,12 @@
 session_start();
 include("../_conn/connection.php");
 // Get and sanitize the studentId from the URL
-$studentId = isset($_GET['studentId']) ? mysqli_real_escape_string($conn, $_GET['studentId']) : null;
+$studentId = isset($_GET['id']) ? mysqli_real_escape_string($conn, $_GET['id']) : null;
 $studentDetails = null;
 
 if ($studentId) {
     // Query to retrieve student details
-    $query = "SELECT studentLRN, fullName, gradelvl, reqDoc, reqDate, claimDate FROM ezdrequesttbl WHERE studentLRN = ?";
+    $query = "SELECT id,studentLRN, fullName, gradelvl, reqDoc, reqDate, claimDate FROM ezdrequesttbl WHERE id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $studentId); // Bind $studentId as an integer
 
@@ -80,7 +80,8 @@ $conn->close();
             }
 
             ?>
-
+            <input class="form-control" type="text" name="id"
+                value="<?= $studentDetails['id']; ?>" readonly>
             <div class="grid grid-cols-2 gap-x-2">
                 <div class="col-span-2 mb-2">
                     <label>Student ID No.</label>
@@ -96,20 +97,21 @@ $conn->close();
 
                 <div class="col-span-2 mb-2">
                     <label>Grade Level</label>
+                    <?= $studentDetails['gradelvl'] ?>
                     <select name="gradelvl" class="form-control">
                         <option disabled>-- Select option --</option>
-                        <option value="Grade 7" <?= ($studentDetails['gradelvl'] == '7' ? 'selected' : ''); ?>>Grade 7</option>
-                        <option value="Grade 8" <?= ($studentDetails['gradelvl'] == '8' ? 'selected' : ''); ?>>Grade 8</option>
-                        <option value="Grade 9" <?= ($studentDetails['gradelvl'] == '9' ? 'selected' : ''); ?>>Grade 9</option>
-                        <option value="Grade 10" <?= ($studentDetails['gradelvl'] == '10' ? 'selected' : ''); ?>>Grade 10</option>
-                        <option value="Grade 11" <?= ($studentDetails['gradelvl'] == '11' ? 'selected' : ''); ?>>Grade 11</option>
-                        <option value="Grade 12" <?= ($studentDetails['gradelvl'] == '12' ? 'selected' : ''); ?>>Grade 12</option>
+                        <option value="Grade 7" <?= ($studentDetails['gradelvl'] == 'Grade 7' ? 'selected' : ''); ?>>Grade 7</option>
+                        <option value="Grade 8" <?= ($studentDetails['gradelvl'] == 'Grade 8' ? 'selected' : ''); ?>>Grade 8</option>
+                        <option value="Grade 9" <?= ($studentDetails['gradelvl'] == 'Grade 9' ? 'selected' : ''); ?>>Grade 9</option>
+                        <option value="Grade 10" <?= ($studentDetails['gradelvl'] == 'Grade 10' ? 'selected' : ''); ?>>Grade 10</option>
+                        <option value="Grade 11" <?= ($studentDetails['gradelvl'] == 'Grade 11' ? 'selected' : ''); ?>>Grade 11</option>
+                        <option value="Grade 12" <?= ($studentDetails['gradelvl'] == 'Grade 12' ? 'selected' : ''); ?>>Grade 12</option>
                     </select>
                 </div>
                 <div class="col-span-2 mb-2">
                     <label>Document Request</label>
                     <select name="reqDoc" class="form-control">
-                        <option disabled selected>-- Select option --</option>
+                        <option disabled>-- Select option --</option>
                         <option value="Certificate of Enrollment" <?= ($studentDetails['reqDoc'] == 'Certificate of Enrollment' ? 'selected' : ''); ?>>Certificate of Enrollment</option>
                         <option value="Certificate of Good Moral" <?= ($studentDetails['reqDoc'] == 'Certificate of Good Moral' ? 'selected' : ''); ?>>Certificate of Good Moral</option>
                         <option value="Form 137" <?= ($studentDetails['reqDoc'] == 'Form 137' ? 'selected' : ''); ?>>Form 137 (SF10)</option>

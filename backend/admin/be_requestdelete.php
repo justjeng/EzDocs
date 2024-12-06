@@ -3,11 +3,11 @@ session_start();
 try {
     include("../../_conn/connection.php");
 
-    if (isset($_GET['studentLRN'])) {
-        $studentLRN = $_GET['studentLRN'];
+    if (isset($_GET['id'])) {
+        $studentLRN = $_GET['id'];
 
         // Delete student requests from request_tbl
-        $sql = "DELETE FROM ezdrequesttbl WHERE studentLRN = $studentLRN";
+        $sql = "DELETE FROM ezdrequesttbl WHERE id = $studentLRN";
         mysqli_query($conn, $sql);
 
         // Redirect back to student_info.php

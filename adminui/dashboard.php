@@ -321,7 +321,7 @@
                 link.addEventListener('click', function(event) {
                     event.preventDefault(); // Prevent default link click behavior
 
-                    const studentLRN = this.getAttribute('data-id'); // Get student LRN from data-id
+                    const id = this.getAttribute('data-id'); // Get student LRN from data-id
 
                     // SweetAlert confirmation
                     Swal.fire({
@@ -335,7 +335,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Redirect to the delete link if confirmed
-                            window.location.href = '../backend/admin/be_requestdelete.php?studentLRN=' + studentLRN;
+                            window.location.href = '../backend/admin/be_requestdelete.php?id=' + id;
                         }
                     });
                 });

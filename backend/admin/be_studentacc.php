@@ -87,24 +87,30 @@ session_start();
         include("../../_includes/scripts.php");
 
         $gradeLevels = range(7, 12);
-
-
-
+        $gradeLevels[] = 'graduate';
+        
         echo '<div class="container-fluid">'; // Ensure there's a container for proper alignment
         if ($_SESSION['adminType'] == 'super admin') {
             echo '<div class="d-flex justify-content-end mb-3 mt-3" style="margin-right: 9rem;">'; // Use Flexbox to align the button to the right
             echo '<a href="be_addstudentaccount.php" class="btn btn-success">Add Student</a>';
             echo '</div>';
         }
-
+        
         foreach ($gradeLevels as $gradeLevel) {
-            $sql = "SELECT studentId, CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) AS fullname, phoneNumber, emailAddress, can_login, is_verified
-                   FROM student_tbl WHERE gradeLevel = $gradeLevel ORDER BY lastname ASC, firstname ASC";
-            $result = mysqli_query($conn, $sql);
-            if (mysqli_num_rows($result) > 0) {
+            // Use a prepared statement to prevent SQL injection and handle strings properly
+            $stmt = $conn->prepare("SELECT studentId, CONCAT(firstname, ' ', middlename, ' ', lastname, ' ', suffix) AS fullname, 
+                                             phoneNumber, emailAddress, can_login, is_verified 
+                                    FROM student_tbl 
+                                    WHERE gradeLevel = ? 
+                                    ORDER BY lastname ASC, firstname ASC");
+            $stmt->bind_param("s", $gradeLevel); // Bind gradeLevel as a string parameter
+            $stmt->execute();
+            $result = $stmt->get_result();
+        
+            if ($result->num_rows > 0) {
                 echo '<hr style="width: 80%; margin: 0 auto;">'; // Center the HR
                 echo '<div class="table-container mt-5">';
-                echo '<h2>Grade ' . htmlspecialchars($gradeLevel) . '</h2>';
+                echo '<h2>' . (is_numeric($gradeLevel) ? 'Grade ' . htmlspecialchars($gradeLevel) : ucfirst(htmlspecialchars($gradeLevel))) . '</h2>';
                 echo '<table class="table table-hover" id="documentTableStudent' . htmlspecialchars($gradeLevel) . '">
                        <thead>
                            <tr>
@@ -116,51 +122,49 @@ session_start();
                            </tr>
                        </thead>
                        <tbody>';
-
-                while ($row = mysqli_fetch_assoc($result)) {
+        
+                while ($row = $result->fetch_assoc()) {
                     echo '<tr>
-                   <td>' . htmlspecialchars($row['studentId']) . '</td>
-                   <td>' . htmlspecialchars($row['fullname']) . '</td>
-                   <td>' . htmlspecialchars($row['phoneNumber']) . '</td>
-                   <td>' . htmlspecialchars($row['emailAddress']) . '<br>';
-
+                           <td>' . htmlspecialchars($row['studentId']) . '</td>
+                           <td>' . htmlspecialchars($row['fullname']) . '</td>
+                           <td>' . htmlspecialchars($row['phoneNumber']) . '</td>
+                           <td>' . htmlspecialchars($row['emailAddress']) . '<br>';
+        
                     $isVerified = isset($row['is_verified']) ? $row['is_verified'] : 0; // Default to 0 if not set
                     $badgeClass = $isVerified ? 'badge bg-success text-white' : 'badge bg-danger text-white'; // Class for badge color
                     $badgeText = $isVerified ? 'Verified' : 'Not Verified'; // Text for badge
-
-                    // Render the badge for verification status directly under the email address
+        
                     echo '<span class="' . $badgeClass . '">' . $badgeText . '</span>';
-
+        
                     echo '</td>
-                   <td style="text-align: center">
-                       <div class="button-group">';
-
+                           <td style="text-align: center">
+                               <div class="button-group">';
+        
                     if ($isVerified) { // Check if the user can log in
                         echo '<button class="btn btn-outline-info" ' . ($row['can_login'] ? 'hidden' : '') . ' 
                                    onclick="location.href=\'be_verifyaccount.php?studentId=' . htmlspecialchars($row['studentId']) . '\'">
                                    Verify
                                  </button>';
                     }
-
-                    echo '      <button class="btn btn-outline-primary" id="btnAccessAccount" 
-                           data-id="' . htmlspecialchars($row['studentId']) . '" 
-                           data-fullname="' . htmlspecialchars($row['fullname']) . '" 
-                           data-phone="' . htmlspecialchars($row['phoneNumber']) . '" 
-                           data-email="' . htmlspecialchars($row['emailAddress']) . '">View Account Details</button>
-                   <form method="GET" action="../be_delete.php" style="display:inline;">
-                       <input type="hidden" name="studentId" value="' . htmlspecialchars($row['studentId']) . '">
-                       <button type="submit" class="btn btn-outline-danger" name="btnDelete">Delete</button>
-                   </form>
-                   </div>
-               </td>
-           </tr>';
+        
+                    echo '<button class="btn btn-outline-primary" id="btnAccessAccount" 
+                               data-id="' . htmlspecialchars($row['studentId']) . '" 
+                               data-fullname="' . htmlspecialchars($row['fullname']) . '" 
+                               data-phone="' . htmlspecialchars($row['phoneNumber']) . '" 
+                               data-email="' . htmlspecialchars($row['emailAddress']) . '">View Account Details</button>
+                           <form method="GET" action="../be_delete.php" style="display:inline;">
+                               <input type="hidden" name="studentId" value="' . htmlspecialchars($row['studentId']) . '">
+                               <button type="submit" class="btn btn-outline-danger" name="btnDelete">Delete</button>
+                           </form>
+                           </div>
+                       </td>
+                   </tr>';
                 }
                 echo '</tbody></table></div>';
             } else {
-                echo '<div class="table-container mt-3"><p>No students found in grade ' . htmlspecialchars($gradeLevel) . '.</p></div>';
+                echo '<div class="table-container mt-3"><p>No students found in ' . (is_numeric($gradeLevel) ? 'grade ' . htmlspecialchars($gradeLevel) : htmlspecialchars(ucfirst($gradeLevel))) . '.</p></div>';
             }
-
-            mysqli_free_result($result);
+            $stmt->close();
         }
         echo '</div>';
 

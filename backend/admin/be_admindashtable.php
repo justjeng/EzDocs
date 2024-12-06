@@ -48,8 +48,8 @@ try {
                     ' . ($row['status'] == 'ready'
                     ? '<a href="admin_msgreq.php?emailAddress=' . $row['emailAddress'] . '">Message</a>'
                     : '<span style="color: gray; cursor: not-allowed;">Message</span>') . ' |
-                    <a href="admineditreq.php?studentId=' . $row['studentLRN'] . '">Edit</a> |
-                    <a class="delete-link" href="../backend/admin/be_requestdelete.php?studentLRN=' . $row['studentLRN'] . '" id="btnDelete" data-id="' . $row['studentLRN'] . '">Delete</a>
+                    <a href="admineditreq.php?id=' . $row['id'] . '">Edit</a> |
+                    <a class="delete-link" href="../backend/admin/be_requestdelete.php?id=' . $row['id'] . '" data-id="' . $row['id'] . '">Delete</a>
                 </td>
             </tr>';
         }

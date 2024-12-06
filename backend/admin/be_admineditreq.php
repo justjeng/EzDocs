@@ -6,7 +6,7 @@ try {
     include("../../_conn/connection.php");
 
     if (isset($_POST['btneditdoc'])) {
-        $studentid = $_POST['studentLRN'];
+        $studentid = $_POST['id'];
         $studentname = $_POST['studentName'];
         $gradelev = $_POST['gradelvl'];
         $docreq = $_POST['reqDoc'];
@@ -16,7 +16,7 @@ try {
         mysqli_autocommit($conn, FALSE);
 
         // Prepare and execute the update statement
-        $editRequestSql = "UPDATE ezdrequesttbl SET fullName = ?, gradelvl = ?, reqDoc = ? WHERE studentLRN = ?";
+        $editRequestSql = "UPDATE ezdrequesttbl SET fullName = ?, gradelvl = ?, reqDoc = ? WHERE id = ?";
         $stmt = $conn->prepare($editRequestSql);
         $stmt->bind_param("ssss", $studentname, $gradelev, $docreq, $studentid);
 
