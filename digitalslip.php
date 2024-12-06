@@ -83,7 +83,7 @@ $html = '
  <table border="1px">
     <h4">Authorization</h4>
     <p>To Whom It May Concern,</p>
-    <p>I, ' . $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname'] . ', hereby authorize ____________________________ to claim my document on my behalf.</p>
+    <p>I, ' . $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname'] . ', hereby authorize '. $row['parent'] . ' to claim my document on my behalf.</p>
     <p>Student Signature: ______________________________</p>
 
     </table>

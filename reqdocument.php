@@ -46,6 +46,16 @@ include_once("_conn/session.php");
                 </div>
 
                 <div class="col-span-2 mb-2">
+                    <label>Teacher/Adviser</label>
+                    <input class="form-control" type="text" name="teachName" maxlength="60" placeholder="Your Teacher/Adviser Name">
+                </div>
+
+                <div class="col-span-2 mb-2">
+                    <label>Attended School Year</label>
+                    <input class="form-control" type="date" name="schoolYear">
+                </div>
+
+                <div class="col-span-2 mb-2">
                     <label>Grade Level</label>
                     <select name="gradelv" class="form-control" required>
                         <option disabled selected value="">-- Your Grade Level on the Document --</option>

@@ -17,6 +17,7 @@ if (isset($_POST["btnCreateAccount"])) {
         $middlename = mysqli_real_escape_string($conn, $_POST["inputMiddlename"]);
         $lastname = mysqli_real_escape_string($conn, $_POST["inputLastname"]);
         $suffix = mysqli_real_escape_string($conn, $_POST["inputSuffix"]);
+        $parent = mysqli_real_escape_string($conn, $_POST["inputParent"]);
         $gradeLevel = mysqli_real_escape_string($conn, $_POST["inputGradeLevel"]);
         $phoneNumber = mysqli_real_escape_string($conn, $_POST["inputPhoneNumber"]);
         $emailAddress = mysqli_real_escape_string($conn, $_POST["inputEmailAddress"]);
@@ -54,6 +55,7 @@ if (isset($_POST["btnCreateAccount"])) {
                 'middlename' => $middlename,
                 'lastname' => $lastname,
                 'suffix' => $suffix,
+                'parent' => $parent,
                 'gradeLevel' => $gradeLevel,
                 'phoneNumber' => $phoneNumber,
                 'emailAddress' => $emailAddress,
@@ -69,8 +71,8 @@ if (isset($_POST["btnCreateAccount"])) {
         $verificationToken = bin2hex(random_bytes(16));
 
         // Prepare SQL query
-        $stmt = $conn->prepare("INSERT INTO student_tbl (studentId, firstname, middlename, lastname, suffix, gradeLevel, phoneNumber, emailAddress, password, email_verification_token, is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
-        $stmt->bind_param("ssssssssss", $studentId, $firstname, $middlename, $lastname, $suffix, $gradeLevel, $phoneNumber, $emailAddress, $hashPassword, $verificationToken);
+        $stmt = $conn->prepare("INSERT INTO student_tbl (studentId, firstname, middlename, lastname, suffix, parent, gradeLevel, phoneNumber, emailAddress, password, email_verification_token, is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
+        $stmt->bind_param("sssssssssss", $studentId, $firstname, $middlename, $lastname, $suffix, $parent, $gradeLevel, $phoneNumber, $emailAddress, $hashPassword, $verificationToken);
 
         if ($stmt->execute()) {
             // Send verification email with PHPMailer

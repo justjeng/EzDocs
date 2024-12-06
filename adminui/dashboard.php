@@ -289,7 +289,7 @@
             </div>
         </div>
 
-        <div class="rounded shadow-lg mt-2 px-3 py-5">
+        <div class="rounded shadow-lg mt-2 px-3 py-4">
             <?php include_once('../backend/admin/be_admindashtable.php'); ?>
         </div>
     </div>
