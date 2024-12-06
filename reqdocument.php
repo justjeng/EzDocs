@@ -51,7 +51,7 @@ include_once("_conn/session.php");
                 </div>
 
                 <div class="col-span-2 mb-2">
-                    <label>School Year</label>
+                    <label>Attended School Year</label>
                     <input class="form-control" type="date" name="schoolYear">
                 </div>
 

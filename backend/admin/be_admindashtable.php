@@ -5,7 +5,7 @@ include_once("../_includes/scripts.php");
 try {
     include("../_conn/connection.php");
 
-    $sql = "SELECT E.id, E.studentLRN, E.fullName, E.teacherName, E.gradelvl, E.reqDoc, E.reqDate, E.status,S.parent, S.phoneNumber, S.emailAddress 
+    $sql = "SELECT E.id, E.studentLRN, E.fullName, E.teacherName, E.gradelvl, E.schoolYear, E.reqDoc, E.reqDate, E.status, S.parent, S.phoneNumber, S.emailAddress 
             FROM `ezdrequesttbl` E 
             JOIN student_tbl S 
             ON E.studentLRN = S.studentId 
@@ -16,11 +16,13 @@ try {
         echo '<table class="table" id="documentTableStudent">
                 <thead>
                     <tr>
+                        <th scope="col">ID</th>
                         <th scope="col">LRN</th>
                         <th scope="col">Student Name</th>
                         <th scope="col">Parent/Guardian</th>
                         <th scope="col">Teacher/Adviser</th>
                         <th scope="col">Grade Level</th>
+                        <th scope="col">School Year</th>
                         <th scope="col">Document Name</th>
                         <th scope="col">Date Requested</th>
                         <th scope="col">Suggested Claim Date</th>
@@ -36,11 +38,13 @@ try {
             $id = $row['id'];
 
             echo '<tr>
+                <td class="align-middle">' . htmlspecialchars($row['id']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['studentLRN']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['fullName']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['parent']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['teacherName']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['gradelvl']) . '</td>
+                <td class="align-middle">' . htmlspecialchars($row['schoolYear']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($row['reqDoc']) . '</td>
                 <td class="align-middle">' . htmlspecialchars($reqDate) . '</td>
                 <td class="align-middle">' . htmlspecialchars($claimDate) . '</td>
